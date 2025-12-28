@@ -4,11 +4,28 @@ import java.util.Arrays;
 
 public class MergeSorting {
 	
-	public static void mergeSort(int[] arr) {
-		
+	public static void mergeSort(int[] numbers) {
+		int length = numbers.length;
+		if(length <=1) {
+			return;
+		}
+		int mid = length/2;
+		int[] leftArray = new int[mid];
+		int[] rightArray = new int[length - mid];
+		int index = 0;
+		for(int i=0; i<length; i++) {
+			if(i< mid) {
+				leftArray[i] = numbers[i];
+			}else {
+				rightArray[index++] = numbers[i];
+			}
+		}
+		mergeSort(leftArray);
+		mergeSort(rightArray);
+		merging(leftArray, rightArray, numbers);
 	}
 	
-	public static int[] merging(int[] leftArray, int[] rightArray, int[] arr) {
+	public static void merging(int[] leftArray, int[] rightArray, int[] arr) {
 		int length = arr.length;
 		int leftLength = length/2;
 		int rightLength = length - leftLength;
@@ -26,31 +43,17 @@ public class MergeSorting {
 		while(k < rightLength) {
 			arr[i++] = rightArray[k++];
 		}
-		return arr;
 	}
 
 	public static void main(String[] args) {
 		int[] numbers = {3,7,8,5,4,2,6,1};
-		int min = 0;
-		int length = numbers.length;
-		int mid = length/2;
-		int[] leftArray = new int[mid];
-		int[] rightArray = new int[length - mid];
-		int index = 0;
-		for(int i=0; i<length; i++) {
-			if(i< mid) {
-				leftArray[i] = numbers[i];
-			}else {
-				rightArray[index++] = numbers[i];
-			}
-		}
-		
-		int[] sortedArr = merging(leftArray, rightArray, numbers);
+		System.out.println("Array before sort:::");
+		Arrays.stream(numbers).forEach(num -> System.out.print(num+" "));
+		System.out.println();
+		mergeSort(numbers);
 		System.out.println("Sorted array is:::");
-		Arrays.stream(sortedArr).forEach(num -> System.out.print(num+" "));
+		Arrays.stream(numbers).forEach(num -> System.out.print(num+" "));
 		
 	}
 	
-	
-
 }
